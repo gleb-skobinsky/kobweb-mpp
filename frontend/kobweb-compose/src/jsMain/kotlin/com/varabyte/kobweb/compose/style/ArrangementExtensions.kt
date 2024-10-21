@@ -31,14 +31,12 @@ private val SpacedAligned.alignmentClassName: String get() = when (this) {
     is Vertical -> when (alignment) {
         Alignment.Bottom -> KOBWEB_ARRANGE_BOTTOM
         Alignment.CenterVertically -> KOBWEB_ARRANGE_CENTER
-        Alignment.FromStyle -> KOBWEB_ARRANGE_FROM_STYLE
         Alignment.Top -> KOBWEB_ARRANGE_TOP
     }
 
     is Horizontal -> when (alignment) {
         Alignment.Start -> KOBWEB_ARRANGE_START
         Alignment.CenterHorizontally -> KOBWEB_ARRANGE_CENTER
-        Alignment.FromStyle -> KOBWEB_ARRANGE_FROM_STYLE
         Alignment.End -> KOBWEB_ARRANGE_END
     }
 

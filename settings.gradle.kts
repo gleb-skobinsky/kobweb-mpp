@@ -1,7 +1,14 @@
 pluginManagement {
     repositories {
+        google {
+            mavenContent {
+                includeGroupAndSubgroups("androidx")
+                includeGroupAndSubgroups("com.android")
+                includeGroupAndSubgroups("com.google")
+            }
+        }
+        mavenCentral()
         gradlePluginPortal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -9,33 +16,36 @@ rootProject.name = "kobweb"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include(":common:kobweb-common")
-include(":common:kobweb-serialization")
-include(":common:kobwebx-serialization-kotlinx")
-include(":common:client-server-internal")
-include(":frontend:kobweb-core")
-include(":frontend:kobweb-compose")
-include(":frontend:kobweb-silk")
-include(":frontend:kobweb-worker")
-include(":frontend:kobweb-worker-interface")
-include(":frontend:silk-foundation")
-include(":frontend:silk-widgets")
-include(":frontend:silk-widgets-kobweb")
-include(":frontend:silk-icons-fa")
-include(":frontend:silk-icons-mdi")
-include(":frontend:kobwebx-markdown")
-include(":frontend:compose-html-ext")
-include(":frontend:browser-ext")
-include(":frontend:test:compose-test-utils")
-include(":backend:kobweb-api")
-include(":backend:server")
-include(":backend:server-plugin")
-include(":tools:gradle-plugins:core")
-include(":tools:gradle-plugins:library")
-include(":tools:gradle-plugins:application")
-include(":tools:gradle-plugins:worker")
-include(":tools:gradle-plugins:extensions:markdown")
-include(":tools:ksp:site-processors")
-include(":tools:ksp:worker-processor")
-include(":tools:ksp:ksp-ext")
-include(":tools:processor-common")
+include(
+    ":common:kobweb-common",
+    ":common:kobweb-serialization",
+    ":common:kobwebx-serialization-kotlinx",
+    ":common:client-server-internal",
+    ":frontend:kobweb-core",
+    ":frontend:kobweb-compose",
+    ":frontend:kobweb-silk",
+    ":frontend:kobweb-worker",
+    ":frontend:kobweb-worker-interface",
+    ":frontend:silk-foundation",
+    ":frontend:silk-widgets",
+    ":frontend:silk-widgets-kobweb",
+    ":frontend:silk-icons-fa",
+    ":frontend:silk-icons-mdi",
+    ":frontend:kobwebx-markdown",
+    ":frontend:compose-html-ext",
+    ":frontend:browser-ext",
+    ":frontend:test:compose-test-utils",
+    ":backend:kobweb-api",
+    ":backend:server",
+    ":backend:server-plugin",
+    ":tools:gradle-plugins:core",
+    ":tools:gradle-plugins:library",
+    ":tools:gradle-plugins:application",
+    ":tools:gradle-plugins:worker",
+    ":tools:gradle-plugins:extensions:markdown",
+    ":tools:ksp:site-processors",
+    ":tools:ksp:worker-processor",
+    ":tools:ksp:ksp-ext",
+    ":tools:processor-common",
+    ":demo"
+)

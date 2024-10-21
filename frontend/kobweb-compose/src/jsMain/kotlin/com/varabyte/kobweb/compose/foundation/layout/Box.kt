@@ -1,5 +1,6 @@
 package com.varabyte.kobweb.compose.foundation.layout
 
+import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.dom.ElementRefScope
 import com.varabyte.kobweb.compose.dom.registerRefScope
@@ -9,18 +10,38 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.attrsModifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
+import com.varabyte.kobweb.compose.ui.toKobWeb
 import org.jetbrains.compose.web.dom.Div
 import org.w3c.dom.HTMLElement
 
 @LayoutScopeMarker
 @Immutable // TODO(#554): Remove annotation after upstream fix
-interface BoxScope {
-    fun Modifier.align(alignment: Alignment) = attrsModifier {
-        classes("${alignment.toClassName()}-self")
-    }
+interface JsBoxScope {
+    @Stable
+    fun Modifier.align(alignment: androidx.compose.ui.Alignment): Modifier
 }
 
-internal object BoxScopeInstance : BoxScope
+actual typealias BoxScope = JsBoxScope
+
+@Composable
+actual inline fun Box(
+    modifier: Modifier,
+    contentAlignment: androidx.compose.ui.Alignment,
+    propagateMinConstraints: Boolean,
+    crossinline content: @Composable BoxScope.() -> Unit
+) = JsBox(
+    modifier = modifier,
+    contentAlignment = contentAlignment.toKobWeb(),
+    content = content
+)
+
+internal object BoxScopeInstance : JsBoxScope {
+    override fun Modifier.align(alignment: androidx.compose.ui.Alignment): Modifier {
+        return attrsModifier {
+            classes("${alignment.toKobWeb().toClassName()}-self")
+        }
+    }
+}
 
 object BoxDefaults {
     val ContentAlignment: Alignment = Alignment.TopStart
@@ -38,11 +59,11 @@ fun Modifier.boxClasses(contentAlignment: Alignment = BoxDefaults.ContentAlignme
     this.classNames("kobweb-box", contentAlignment.toClassName())
 
 @Composable
-fun Box(
+inline fun JsBox(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.TopStart,
     ref: ElementRefScope<HTMLElement>? = null,
-    content: @Composable BoxScope.() -> Unit = {}
+    crossinline content: @Composable JsBoxScope.() -> Unit = {}
 ) {
     Div(attrs = modifier.boxClasses(contentAlignment).toAttrs()) {
         registerRefScope(ref)

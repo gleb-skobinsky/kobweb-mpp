@@ -4,8 +4,7 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.dom.ElementRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Box
-import com.varabyte.kobweb.compose.foundation.layout.BoxScope
-import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.foundation.layout.JsBoxScope
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.defer.Deferred
@@ -57,7 +56,7 @@ fun Overlay(
     variant: CssStyleVariant<OverlayKind>? = null,
     contentAlignment: Alignment = Alignment.TopCenter,
     ref: ElementRefScope<HTMLElement>? = null,
-    content: @Composable BoxScope.() -> Unit = {}
+    content: @Composable JsBoxScope.() -> Unit = {}
 ) {
     Deferred {
         Box(

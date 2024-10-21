@@ -6,10 +6,9 @@ import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.css.functions.calc
 import com.varabyte.kobweb.compose.dom.ElementRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Box
-import com.varabyte.kobweb.compose.foundation.layout.BoxScope
+import com.varabyte.kobweb.compose.foundation.layout.JsBoxScope
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
-import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.thenIf
@@ -100,12 +99,12 @@ annotation class TabsScopeMarker
 
 internal data class TabData(
     val modifier: Modifier = Modifier,
-    val content: @Composable BoxScope.() -> Unit,
+    val content: @Composable JsBoxScope.() -> Unit,
 )
 
 internal data class PanelData(
     val modifier: Modifier = Modifier,
-    val content: @Composable BoxScope.() -> Unit,
+    val content: @Composable JsBoxScope.() -> Unit,
 )
 
 internal data class TabPanelData(
@@ -121,13 +120,13 @@ class TabPanelScope {
     internal var panel: PanelData? = null
 
     @Suppress("FunctionName") // Composable style
-    fun Tab(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    fun Tab(modifier: Modifier = Modifier, content: @Composable JsBoxScope.() -> Unit) {
         check(tab == null) { "Attempting to define two tabs for a single TabPanel" }
         tab = TabData(modifier, content)
     }
 
     @Suppress("FunctionName") // Composable style
-    fun Panel(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    fun Panel(modifier: Modifier = Modifier, content: @Composable JsBoxScope.() -> Unit) {
         check(panel == null) { "Attempting to define two panels for a single TabPanel" }
         panel = PanelData(modifier, content)
     }
@@ -185,7 +184,7 @@ fun TabsScope.TabPanel(
     panelModifier: Modifier = Modifier,
     enabled: Boolean = true,
     isDefault: Boolean = false,
-    content: @TabsScopeMarker @Composable BoxScope.() -> Unit
+    content: @TabsScopeMarker @Composable JsBoxScope.() -> Unit
 ) {
     TabPanel(enabled, isDefault) {
         Tab(tabText, tabModifier)

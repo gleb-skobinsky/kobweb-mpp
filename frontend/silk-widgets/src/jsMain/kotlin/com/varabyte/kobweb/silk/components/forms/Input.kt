@@ -7,9 +7,8 @@ import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.dom.ElementRefScope
 import com.varabyte.kobweb.compose.dom.registerRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Box
-import com.varabyte.kobweb.compose.foundation.layout.BoxScope
+import com.varabyte.kobweb.compose.foundation.layout.JsBoxScope
 import com.varabyte.kobweb.compose.foundation.layout.Row
-import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -249,11 +248,11 @@ class InputGroupScope {
 
     internal var leftModifier: Modifier = Modifier
     internal var rightModifier: Modifier = Modifier
-    internal var leftAddon: (@Composable BoxScope.() -> Unit)? = null
-    internal var rightAddon: (@Composable BoxScope.() -> Unit)? = null
-    internal var leftInset: (@Composable BoxScope.() -> Unit)? = null
+    internal var leftAddon: (@Composable JsBoxScope.() -> Unit)? = null
+    internal var rightAddon: (@Composable JsBoxScope.() -> Unit)? = null
+    internal var leftInset: (@Composable JsBoxScope.() -> Unit)? = null
     internal var leftInsetWidth: CSSLengthOrPercentageNumericValue? = null
-    internal var rightInset: (@Composable BoxScope.() -> Unit)? = null
+    internal var rightInset: (@Composable JsBoxScope.() -> Unit)? = null
     internal var rightInsetWidth: CSSLengthOrPercentageNumericValue? = null
 
     fun <T : Any?> Input(
@@ -308,7 +307,7 @@ class InputGroupScope {
      * @see RightAddon
      * @see LeftInset
      */
-    fun LeftAddon(modifier: Modifier = Modifier, block: @InputGroupScopeMarker @Composable BoxScope.() -> Unit) {
+    fun LeftAddon(modifier: Modifier = Modifier, block: @InputGroupScopeMarker @Composable JsBoxScope.() -> Unit) {
         require(leftAddon == null && leftInset == null) { "Can only set one left addon or inset element" }
         leftModifier = modifier
         leftAddon = block
@@ -322,7 +321,7 @@ class InputGroupScope {
      * @see LeftAddon
      * @see RightInset
      */
-    fun RightAddon(modifier: Modifier = Modifier, block: @InputGroupScopeMarker @Composable BoxScope.() -> Unit) {
+    fun RightAddon(modifier: Modifier = Modifier, block: @InputGroupScopeMarker @Composable JsBoxScope.() -> Unit) {
         require(rightAddon == null && rightInset == null) { "Can only set one right addon or inset element" }
         rightModifier = modifier
         rightAddon = block
@@ -344,7 +343,7 @@ class InputGroupScope {
     fun LeftInset(
         modifier: Modifier = Modifier,
         width: CSSLengthOrPercentageNumericValue? = null,
-        block: @InputGroupScopeMarker @Composable BoxScope.() -> Unit
+        block: @InputGroupScopeMarker @Composable JsBoxScope.() -> Unit
     ) {
         require(leftAddon == null && leftInset == null) { "Can only set one left addon or inset element" }
         leftModifier = modifier
@@ -366,7 +365,7 @@ class InputGroupScope {
     fun RightInset(
         modifier: Modifier = Modifier,
         width: CSSLengthOrPercentageNumericValue? = null,
-        block: @InputGroupScopeMarker @Composable BoxScope.() -> Unit
+        block: @InputGroupScopeMarker @Composable JsBoxScope.() -> Unit
     ) {
         require(rightAddon == null && rightInset == null) { "Can only set one right addon or inset element" }
         rightModifier = modifier

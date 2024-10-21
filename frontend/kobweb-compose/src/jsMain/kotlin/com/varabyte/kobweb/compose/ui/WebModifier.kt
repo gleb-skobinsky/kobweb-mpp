@@ -7,7 +7,7 @@ import org.jetbrains.compose.web.css.*
 import org.w3c.dom.Element
 
 // Just a marker interface to express intention
-interface WebModifier : Modifier.Element
+interface WebModifier : ModifierElement
 
 /**
  * A modifier element which works by setting CSS styles and/or attributes when it is applied.
@@ -74,7 +74,7 @@ fun Modifier.styleModifier(styles: (StyleScope.() -> Unit)) = this then StyleMod
 fun <A : AttrsScope<Element>> Modifier.toAttrs(finalHandler: (A.() -> Unit)? = null): A.() -> Unit {
     val firstModifier = this
     return {
-        firstModifier.fold(Unit) { _, element ->
+        firstModifier.foldIn(Unit) { _, element ->
             if (element is AttrsModifier) {
                 element.attrs.invoke(this)
             } else if (element is StyleModifier) {
@@ -97,7 +97,7 @@ fun <A : AttrsScope<Element>> Modifier.toAttrs(finalHandler: (A.() -> Unit)? = n
 fun Modifier.toStyles(finalHandler: (StyleScope.() -> Unit)? = null): StyleScope.() -> Unit {
     val firstModifier = this
     return {
-        firstModifier.fold(Unit) { _, element ->
+        firstModifier.foldIn(Unit) { _, element ->
             if (element is StyleModifier) {
                 element.styles.invoke(this)
             }

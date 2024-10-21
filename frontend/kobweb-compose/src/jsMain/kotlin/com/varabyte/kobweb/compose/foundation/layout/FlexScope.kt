@@ -1,5 +1,6 @@
 package com.varabyte.kobweb.compose.foundation.layout
 
+import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*

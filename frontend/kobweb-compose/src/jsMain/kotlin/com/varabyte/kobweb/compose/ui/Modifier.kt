@@ -1,48 +1,70 @@
 package com.varabyte.kobweb.compose.ui
 
-// Inspired by the official Android API
-// See also: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/ui/ui/src/commonMain/kotlin/androidx/compose/ui/Modifier.kt
+import androidx.compose.runtime.*
 
-/**
- * A parent interface that represents a collection of zero (or more) modifier elements.
- *
- * An individual modifier, when triggered, will run an operation responsible for modifying the look and feel of some
- * target UI component.
- */
-interface Modifier {
-    /**
-     * Run through all elements from left to right and apply [operation] on each one in order.
-     *
-     * Each operation is passed in an accumulated value which it can modify. The method ultimately returns the result
-     * returned from the last operation.
-     *
-     * Note: This is identical to Android's `foldIn` method. However, we are calling it simply `fold` for now, as
-     * we don't currently have a need for `foldOut`, as this codebase (and the web approach in general?) doesn't yet
-     * have a need for the other direction, and `fold` is more consistent with [Iterable.fold].
-     */
-    fun <R> fold(initial: R, operation: (R, Element) -> R): R
+actual typealias Modifier = JsModifier
 
-    /**
-     * Concatenates this modifier with another, returning a new modifier representing the chain.
-     */
+actual typealias ModifierElement = JsModifier.Element
+
+@Suppress("ModifierFactoryExtensionFunction")
+@Stable
+interface JsModifier {
+    fun <R> foldIn(initial: R, operation: (R, Element) -> R): R
+    fun <R> foldOut(initial: R, operation: (Element, R) -> R): R
+    fun any(predicate: (Element) -> Boolean): Boolean
+    fun all(predicate: (Element) -> Boolean): Boolean
+
     infix fun then(other: Modifier): Modifier =
-        if (other === Modifier) this else ChainedModifier(this, other)
+        if (other === Modifier) this else CombinedModifier(this, other)
 
-    /**
-     * A single element within a [Modifier] chain.
-     */
     interface Element : Modifier {
-        override fun <R> fold(initial: R, operation: (R, Element) -> R): R = operation(initial, this)
+        override fun <R> foldIn(initial: R, operation: (R, Element) -> R): R =
+            operation(initial, this)
+
+        override fun <R> foldOut(initial: R, operation: (Element, R) -> R): R =
+            operation(this, initial)
+
+        override fun any(predicate: (Element) -> Boolean): Boolean = predicate(this)
+
+        override fun all(predicate: (Element) -> Boolean): Boolean = predicate(this)
     }
 
-    /**
-     * An empty modifier that acts as the starting point for a modifier chain.
-     */
     companion object : Modifier {
-        override fun <R> fold(initial: R, operation: (R, Element) -> R): R = initial
+        override fun <R> foldIn(initial: R, operation: (R, Element) -> R): R = initial
+        override fun <R> foldOut(initial: R, operation: (Element, R) -> R): R = initial
+        override fun any(predicate: (Element) -> Boolean): Boolean = false
+        override fun all(predicate: (Element) -> Boolean): Boolean = true
         override infix fun then(other: Modifier): Modifier = other
+        override fun toString() = "Modifier"
     }
 }
+
+class CombinedModifier(
+    internal val outer: Modifier,
+    internal val inner: Modifier
+) : Modifier {
+    override fun <R> foldIn(initial: R, operation: (R, ModifierElement) -> R): R =
+        inner.foldIn(outer.foldIn(initial, operation), operation)
+
+    override fun <R> foldOut(initial: R, operation: (ModifierElement, R) -> R): R =
+        outer.foldOut(inner.foldOut(initial, operation), operation)
+
+    override fun any(predicate: (ModifierElement) -> Boolean): Boolean =
+        outer.any(predicate) || inner.any(predicate)
+
+    override fun all(predicate: (ModifierElement) -> Boolean): Boolean =
+        outer.all(predicate) && inner.all(predicate)
+
+    override fun equals(other: Any?): Boolean =
+        other is CombinedModifier && outer == other.outer && inner == other.inner
+
+    override fun hashCode(): Int = outer.hashCode() + 31 * inner.hashCode()
+
+    override fun toString() = "[" + foldIn("") { acc, element ->
+        if (acc.isEmpty()) element.toString() else "$acc, $element"
+    } + "]"
+}
+
 
 /**
  * Like [then] but the [other] modifier is only applied if the condition is true.
@@ -80,21 +102,4 @@ inline fun <T> Modifier.thenIfNotNull(value: T?, consume: (T) -> Modifier): Modi
  */
 inline fun Modifier.thenUnless(condition: Boolean, lazyProduce: () -> Modifier): Modifier {
     return this.thenIf(!condition, lazyProduce)
-}
-
-/**
- * An entry in a [Modifier] chain.
- */
-private class ChainedModifier(
-    private val current: Modifier,
-    private val next: Modifier
-) : Modifier {
-    override fun <R> fold(initial: R, operation: (R, Modifier.Element) -> R): R {
-        return next.fold(current.fold(initial, operation), operation)
-    }
-
-    override fun equals(other: Any?): Boolean =
-        other is ChainedModifier && current == other.current && next == other.next
-
-    override fun hashCode(): Int = current.hashCode() + 31 * next.hashCode()
 }

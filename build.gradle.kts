@@ -8,9 +8,12 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     `kotlin-dsl` apply false
     alias(libs.plugins.kotlinx.serialization) apply false
+    alias(libs.plugins.compose.multiplatform) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.application) apply false
 }
 
-subprojects {
+allprojects {
     repositories {
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")

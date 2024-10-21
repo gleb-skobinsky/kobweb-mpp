@@ -2,6 +2,8 @@
 
 package com.varabyte.kobweb.compose.ui
 
+import androidx.compose.ui.Alignment as JbAlignment
+
 sealed interface Alignment {
     sealed interface Vertical
     sealed interface Horizontal
@@ -23,26 +25,31 @@ sealed interface Alignment {
     object Start : Horizontal
     object CenterHorizontally : Horizontal
     object End : Horizontal
+}
 
-    /**
-     * A special value indicating that this element's alignment will be controlled manually using CSS styles.
-     *
-     * For example:
-     *
-     * ```
-     * // We want to use CssStyle + breakpoints to control the layout of our row
-     * val ResponsiveStyle = CssStyle {
-     *   base { Modifier.alignItems(Top) }
-     *   Breakpoint.MD { Modifier.alignItems(Center) }
-     * }
-     *
-     * /* ... later ... */
-     * Row(ResponsiveStyle.toModifier(), verticalAlignment = Alignment.FromStyle)
-     * ```
-     *
-     * Using this means you know what you are doing! And that you understand which display type is powering the
-     * underlying element (grid for boxes, flexbox for rows and columns). It will be up to you to use the right
-     * `justify` / `align` modifier methods to get the behavior you want.
-     */
-    object FromStyle : Alignment, Horizontal, Vertical
+fun JbAlignment.toKobWeb() = when (this) {
+    JbAlignment.TopStart -> Alignment.TopStart
+    JbAlignment.TopCenter -> Alignment.TopCenter
+    JbAlignment.TopEnd -> Alignment.TopEnd
+    JbAlignment.CenterStart -> Alignment.CenterStart
+    JbAlignment.Center -> Alignment.Center
+    JbAlignment.CenterEnd -> Alignment.CenterEnd
+    JbAlignment.BottomStart -> Alignment.BottomStart
+    JbAlignment.BottomEnd -> Alignment.BottomEnd
+    JbAlignment.BottomCenter -> Alignment.BottomCenter
+    else -> Alignment.TopStart
+}
+
+fun JbAlignment.Horizontal.toKobWeb() = when (this) {
+    JbAlignment.Start -> Alignment.Start
+    JbAlignment.CenterHorizontally -> Alignment.CenterHorizontally
+    JbAlignment.End -> Alignment.End
+    else -> Alignment.Start
+}
+
+fun JbAlignment.Vertical.toKobWeb() = when (this) {
+    JbAlignment.Top -> Alignment.Top
+    JbAlignment.CenterVertically -> Alignment.CenterVertically
+    JbAlignment.Bottom -> Alignment.Bottom
+    else -> Alignment.Top
 }

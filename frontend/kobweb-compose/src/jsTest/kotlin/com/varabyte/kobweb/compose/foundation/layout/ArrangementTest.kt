@@ -1,7 +1,6 @@
 package com.varabyte.kobweb.compose.foundation.layout
 
 import com.varabyte.kobweb.compose.style.toClassNames
-import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.truthish.assertThat
 import org.jetbrains.compose.web.css.*
 import kotlin.test.Test

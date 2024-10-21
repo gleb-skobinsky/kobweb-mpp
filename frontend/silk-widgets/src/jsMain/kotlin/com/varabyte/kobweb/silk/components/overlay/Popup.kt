@@ -4,8 +4,7 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.browser.dom.observers.ResizeObserver
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.Transition
-import com.varabyte.kobweb.compose.foundation.layout.BoxScope
-import com.varabyte.kobweb.compose.foundation.layout.LayoutScopeMarker
+import com.varabyte.kobweb.compose.foundation.layout.JsBoxScope
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.style.ComponentKind
@@ -71,11 +70,11 @@ enum class PopupPlacement {
 /**
  * The scope for the content of a popup.
  *
- * Note that this is essentially a [BoxScope] with some extra information added to it relevant to popups.
+ * Note that this is essentially a [JsBoxScope] with some extra information added to it relevant to popups.
  */
 @LayoutScopeMarker
 @Immutable // TODO(#554): Remove annotation after upstream fix
-class PopupScope(val placement: PopupPlacement?) : BoxScope
+class PopupScope(val placement: PopupPlacement?) : JsBoxScope
 
 private fun HTMLElement.updatePosition(position: PopupPlacementStrategy.Position) {
     style.top = "${position.top}"

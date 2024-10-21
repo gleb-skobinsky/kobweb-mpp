@@ -1,7 +1,7 @@
 [versions]
 playwright = "1.45.1"
 commonmark = "0.21.0"
-compose = "1.6.11"
+compose = "1.7.0"
 jsoup = "1.16.2"
 kaml = "0.60.0"
 kobweb-libs = "0.19.2"
@@ -15,6 +15,10 @@ ktor = "2.3.12"
 logback = "1.4.14"
 truthish = "1.0.2-SNAPSHOT"
 shadow = "8.3.0"
+agp = "8.2.2"
+android-compileSdk = "34"
+android-minSdk = "24"
+android-targetSdk = "34"
 
 [libraries]
 commonmark-core = { module = "org.commonmark:commonmark", version.ref = "commonmark" }
@@ -74,3 +78,6 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }

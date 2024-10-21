@@ -5,8 +5,7 @@ import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.dom.ElementRefScope
 import com.varabyte.kobweb.compose.dom.refScope
 import com.varabyte.kobweb.compose.foundation.layout.Box
-import com.varabyte.kobweb.compose.foundation.layout.BoxScope
-import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.foundation.layout.JsBoxScope
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.init.setSilkWidgetVariables
@@ -53,7 +52,7 @@ fun Surface(
     colorModeOverride: ColorMode? = null,
     contentAlignment: Alignment = Alignment.TopStart,
     ref: ElementRefScope<HTMLElement>? = null,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable JsBoxScope.() -> Unit
 ) {
     var surfaceElement by remember { mutableStateOf<HTMLElement?>(null)}
     Box(
