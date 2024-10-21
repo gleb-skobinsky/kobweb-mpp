@@ -23,6 +23,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.frontend.kobwebCompose)
+            implementation(projects.frontend.silkFoundation)
             implementation(compose.ui)
         }
         jsMain.dependencies {
