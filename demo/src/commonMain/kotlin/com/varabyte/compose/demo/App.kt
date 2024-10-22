@@ -3,6 +3,9 @@ package com.varabyte.compose.demo
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -19,7 +22,10 @@ fun App() {
         Text(
             text = "Hello world from KobWeb",
             fontSize = 64.sp,
-            color = Color.Red
+            color = Color.Red,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Normal,
+            fontFamily = FontFamily.SansSerif
         )
     }
 }

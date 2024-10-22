@@ -1,5 +1,6 @@
 package com.varabyte.kobweb.compose.ui
 
+import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import org.jetbrains.compose.web.css.*
@@ -15,6 +16,7 @@ fun Float.toPercent(): CSSPercentageNumericValue {
     return (this * 100).percent
 }
 
+@Stable
 fun ComposeColor.toCssColor(): CSSColorValue = rgba(
     r = red.take255(),
     g = green.take255(),
