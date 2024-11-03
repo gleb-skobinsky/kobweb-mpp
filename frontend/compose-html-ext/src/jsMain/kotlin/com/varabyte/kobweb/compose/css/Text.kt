@@ -27,8 +27,9 @@ fun StyleScope.textAlign(textAlign: TextAlign) {
 }
 
 // See: https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line
-class TextDecorationLine private constructor(private val value: String) : StylePropertyValue {
-    override fun toString() = value
+class TextDecorationLine private constructor(internal val value: Set<String>) : StylePropertyValue {
+    private constructor(vararg values: String): this(values.toSet())
+    override fun toString() = value.toString()
 
     companion object {
         val Underline get() = TextDecorationLine("underline")
@@ -41,10 +42,12 @@ class TextDecorationLine private constructor(private val value: String) : StyleP
         val Revert get() = TextDecorationLine("revert")
         val Unset get() = TextDecorationLine("unset")
     }
+
+    operator fun plus(other: TextDecorationLine) = TextDecorationLine(this.value + other.value)
 }
 
-fun StyleScope.textDecorationLine(vararg textDecorationLines: TextDecorationLine) {
-    property("text-decoration-line", textDecorationLines.joinToString(" "))
+fun StyleScope.textDecorationLine(textDecorationLine: TextDecorationLine) {
+    property("text-decoration-line", textDecorationLine.value.joinToString(" "))
 }
 
 // See: https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow
