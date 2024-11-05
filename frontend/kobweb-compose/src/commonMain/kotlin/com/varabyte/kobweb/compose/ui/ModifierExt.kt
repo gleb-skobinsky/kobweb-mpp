@@ -12,3 +12,8 @@ inline fun <T> Modifier.applyNullable(
     value: T?,
     applier: Modifier.(T) -> Modifier
 ): Modifier = value?.let { this.applier(it) } ?: this
+
+@Stable
+inline fun Modifier.applyIf(condition: Boolean, lazyProduce: Modifier.() -> Modifier): Modifier {
+    return if (condition) this.lazyProduce() else this
+}

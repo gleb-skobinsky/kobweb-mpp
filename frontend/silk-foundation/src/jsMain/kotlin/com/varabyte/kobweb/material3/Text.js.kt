@@ -1,6 +1,7 @@
 package com.varabyte.kobweb.material3
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
@@ -40,19 +41,19 @@ fun Text(
     style: TextStyle
 ) {
     val actualStyle = style.merge(
-        color = color, // +
-        fontSize = fontSize, // +
-        fontWeight = fontWeight, // +
-        textAlign = textAlign ?: TextAlign.Unspecified, // +
-        lineHeight = lineHeight, // +
-        fontFamily = fontFamily, // +
+        color = color,
+        fontSize = fontSize,
+        fontWeight = fontWeight,
+        textAlign = textAlign ?: TextAlign.Unspecified,
+        lineHeight = lineHeight,
+        fontFamily = fontFamily,
         textDecoration = textDecoration,
         fontStyle = fontStyle,
         letterSpacing = letterSpacing
     )
     Span(
         attrs = modifier
-            .textStyleModifier(actualStyle)
+            .textStyleModifier(actualStyle, overflow)
             .toAttrs()
     ) {
         DomText(text)
