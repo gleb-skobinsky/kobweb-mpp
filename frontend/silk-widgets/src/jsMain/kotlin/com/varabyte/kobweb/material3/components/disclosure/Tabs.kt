@@ -8,7 +8,7 @@ import com.varabyte.kobweb.compose.dom.ElementRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.JsBoxScope
 import com.varabyte.kobweb.compose.foundation.layout.Column
-import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.foundation.layout.JsRow
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.thenIf
@@ -288,7 +288,7 @@ fun Tabs(
     }
 
     Column(TabsStyle.toModifier(variant).then(modifier), ref = ref) {
-        Row(TabsTabRowStyle.toModifier()) {
+        JsRow(TabsTabRowStyle.toModifier()) {
             val tabPalette = ColorMode.current.toPalette().tab
             tabPanels.forEachIndexed { i, tabPanel ->
                 val isActive = (i == selectedTabIndex)

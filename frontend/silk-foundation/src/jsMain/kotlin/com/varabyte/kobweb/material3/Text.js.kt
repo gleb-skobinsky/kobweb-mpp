@@ -13,15 +13,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
+import com.varabyte.kobweb.compose.css.Overflow
+import com.varabyte.kobweb.compose.css.WhiteSpace
+import com.varabyte.kobweb.compose.css.WordBreak
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.applyNullable
+import com.varabyte.kobweb.compose.ui.modifiers.overflow
+import com.varabyte.kobweb.compose.ui.modifiers.textOverflow
+import com.varabyte.kobweb.compose.ui.modifiers.whiteSpace
+import com.varabyte.kobweb.compose.ui.modifiers.wordBreak
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.material3.text.textStyleModifier
+import com.varabyte.kobweb.material3.text.toKobweb
 import org.jetbrains.compose.web.dom.Span
 import com.varabyte.kobweb.compose.css.FontStyle as DomFontStyle
 import org.jetbrains.compose.web.dom.Text as DomText
 
 @Composable
-fun Text(
+actual fun Text(
     text: String,
     modifier: Modifier,
     color: Color,
@@ -53,7 +62,18 @@ fun Text(
     )
     Span(
         attrs = modifier
-            .textStyleModifier(actualStyle, overflow)
+            .textStyleModifier(actualStyle)
+            .applyNullable(overflow.toKobweb()) { textOverflow(it) }
+            .then(
+                if (softWrap) {
+                    Modifier
+                        .wordBreak(WordBreak.Normal)
+                } else {
+                    Modifier
+                        .whiteSpace(WhiteSpace.NoWrap)
+                        .overflow(Overflow.Hidden)
+                }
+            )
             .toAttrs()
     ) {
         DomText(text)

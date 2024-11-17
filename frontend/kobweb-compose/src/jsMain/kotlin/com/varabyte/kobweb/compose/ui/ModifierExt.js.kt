@@ -1,14 +1,22 @@
 package com.varabyte.kobweb.compose.ui
 
-import androidx.compose.runtime.*
-import com.varabyte.kobweb.compose.css.*
-import com.varabyte.kobweb.compose.ui.modifiers.*
-import org.jetbrains.compose.web.css.*
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.unit.Dp
+import com.varabyte.kobweb.compose.css.CSSPercentageNumericValue
+import com.varabyte.kobweb.compose.ui.modifiers.backgroundColor
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
+import com.varabyte.kobweb.compose.ui.modifiers.width
+import org.jetbrains.compose.web.css.CSSColorValue
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.css.rgba
 import androidx.compose.ui.graphics.Color as ComposeColor
 
 actual fun Modifier.fillMaxSize(fraction: Float): Modifier = fillMaxSize(fraction.toPercent())
 
 actual fun Modifier.background(color: ComposeColor): Modifier = backgroundColor(color.toCssColor())
+
+actual fun Modifier.width(width: Dp): Modifier = width(width.value.px)
 
 fun Float.toPercent(): CSSPercentageNumericValue {
     if (0 >= this) return 0.percent

@@ -1,6 +1,6 @@
 package com.varabyte.kobweb.compose.foundation.layout
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 

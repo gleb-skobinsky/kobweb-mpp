@@ -8,7 +8,7 @@ import com.varabyte.kobweb.compose.dom.ElementRefScope
 import com.varabyte.kobweb.compose.dom.registerRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.JsBoxScope
-import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.foundation.layout.JsRow
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -676,7 +676,7 @@ fun InputGroup(
 ) {
     val scope = InputGroupScope().apply(block)
     val inputParams = scope.inputParams ?: error("Must call `Input` within `InputGroup` block.")
-    Row(
+    JsRow(
         InputGroupStyle.toModifier(variant)
             .then(size.toModifier())
             .position(Position.Relative) // So we can place inset elements

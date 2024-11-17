@@ -1,6 +1,7 @@
 package com.varabyte.kobweb.compose.foundation.layout
 
 import androidx.compose.foundation.layout.LayoutScopeMarker
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -19,3 +20,4 @@ expect inline fun Box(
     propagateMinConstraints: Boolean = false,
     crossinline content: @Composable BoxScope.() -> Unit
 )
+

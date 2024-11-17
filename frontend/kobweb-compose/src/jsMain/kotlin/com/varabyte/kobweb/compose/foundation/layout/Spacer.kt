@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import org.jetbrains.compose.web.dom.Div
 
 /**
- * An element which grows to consume all remaining space in a [Row] or [Column].
+ * An element which grows to consume all remaining space in a [JsRow] or [Column].
  */
 @Composable
 fun Spacer() {

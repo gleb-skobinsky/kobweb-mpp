@@ -7,7 +7,7 @@ import com.varabyte.kobweb.compose.ui.Alignment
 
 /**
  * Used to specify the arrangement of the layout's children in layouts like
- * [Row] or [Column] in their main axis direction (horizontal and vertical,
+ * [JsRow] or [Column] in their main axis direction (horizontal and vertical,
  * respectively).
  */
 object Arrangement {
@@ -203,6 +203,7 @@ object Arrangement {
 }
 
 /** Arrangement with spacing between adjacent children. */
+@PublishedApi
 internal sealed class SpacedAligned(
     val spacing: CSSLengthOrPercentageNumericValue,
 ) : Arrangement.HorizontalOrVertical {

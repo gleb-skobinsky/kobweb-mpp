@@ -19,6 +19,7 @@ internal const val KOBWEB_ARRANGE_SPACE_EVENLY = "kobweb-arrange-space-evenly"
 internal const val KOBWEB_ARRANGE_START = "kobweb-arrange-start"
 internal const val KOBWEB_ARRANGE_TOP = "kobweb-arrange-top"
 
+@PublishedApi
 internal val ArrangeSpacedByVar by StyleVariable<CSSLengthOrPercentageNumericValue>(prefix = "kobweb")
 
 internal fun GenericStyleSheetBuilder<CSSStyleRuleBuilder>.initArrangeSpacedByStyle() {

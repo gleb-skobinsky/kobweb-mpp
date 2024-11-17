@@ -6,7 +6,7 @@ import com.varabyte.kobweb.compose.css.AlignItems
 import com.varabyte.kobweb.compose.dom.ElementRefScope
 import com.varabyte.kobweb.compose.dom.registerRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Box
-import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.foundation.layout.JsRow
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
@@ -272,7 +272,7 @@ fun Callout(
 ) {
     Div(CalloutStyle.toModifier(variant).then(type.toModifier()).then(modifier).toAttrs()) {
         registerRefScope(ref)
-        Row(Modifier.classNames("callout-title")) {
+        JsRow(Modifier.classNames("callout-title")) {
             Box(Modifier.classNames("callout-icon"), contentAlignment = Alignment.Center) {
                 type.icon()
             }

@@ -4,7 +4,6 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.isSpecified
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.applyIf
@@ -18,15 +17,13 @@ import com.varabyte.kobweb.compose.ui.modifiers.letterSpacing
 import com.varabyte.kobweb.compose.ui.modifiers.lineHeight
 import com.varabyte.kobweb.compose.ui.modifiers.textAlign
 import com.varabyte.kobweb.compose.ui.modifiers.textDecorationLine
-import com.varabyte.kobweb.compose.ui.modifiers.textOverflow
 import com.varabyte.kobweb.compose.ui.toCssColor
 import com.varabyte.kobweb.material3.cssName
 import com.varabyte.kobweb.material3.toCssFontStyle
 import org.jetbrains.compose.web.css.px
 
 internal fun Modifier.textStyleModifier(
-    style: TextStyle,
-    overflow: TextOverflow
+    style: TextStyle
 ): Modifier {
     return with(style) {
         this@textStyleModifier
@@ -41,7 +38,6 @@ internal fun Modifier.textStyleModifier(
             .applyIf(letterSpacing.isSpecified) { letterSpacing(letterSpacing.value.px) }
             .applyNullable(shadow) { if (shadow != Shadow.None) textShadow(it) else this }
             .applyNullable(fontSynthesis) { cssFontSynthesis(it) }
-            .applyNullable(overflow.toKobweb()) { textOverflow(it) }
     }
 }
 

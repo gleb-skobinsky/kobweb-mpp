@@ -11,7 +11,6 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.attrsModifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.thenIfNotNull
 import com.varabyte.kobweb.compose.ui.toAttrs
 import org.jetbrains.compose.web.dom.Div
@@ -19,13 +18,13 @@ import org.w3c.dom.HTMLElement
 
 @LayoutScopeMarker
 @Immutable // TODO(#554): Remove annotation after upstream fix
-interface RowScope : FlexScope {
+interface JsRowScope : FlexScope {
     fun Modifier.align(alignment: Alignment.Vertical) = attrsModifier {
         classes("${alignment.toClassName()}-self")
     }
 }
 
-internal object RowScopeInstance : RowScope
+internal object RowScopeInstance : JsRowScope
 
 object RowDefaults {
     val HorizontalArrangement: Arrangement.Horizontal = Arrangement.Start
@@ -47,12 +46,12 @@ fun Modifier.rowClasses(
     .classNames("kobweb-row", *horizontalArrangement.toClassNames(), verticalAlignment.toClassName())
 
 @Composable
-fun Row(
+inline fun JsRow(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = RowDefaults.HorizontalArrangement,
     verticalAlignment: Alignment.Vertical = RowDefaults.VerticalAlignment,
     ref: ElementRefScope<HTMLElement>? = null,
-    content: @Composable RowScope.() -> Unit
+    crossinline content: @Composable JsRowScope.() -> Unit
 ) {
     Div(
         attrs = modifier
