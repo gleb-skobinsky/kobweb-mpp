@@ -33,7 +33,7 @@ fun App() {
                 fontStyle = FontStyle.Italic,
                 fontWeight = FontWeight.Normal,
                 fontFamily = FontFamily.SansSerif,
-                //softWrap = false,
+                minLines = 5,
                 overflow = TextOverflow.Ellipsis
             )
         }

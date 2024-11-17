@@ -32,4 +32,10 @@ fun ComposeColor.toCssColor(): CSSColorValue = rgba(
     a = alpha.take255()
 )
 
+fun JsModifier.lineClamp(maxLines: Int): Modifier = styleModifier {
+    property("-webkit-line-clamp", maxLines.toString())
+    property("line-clamp", maxLines.toString())
+    property("-webkit-box-orient", "vertical")
+}
+
 inline fun Float.take255() = this * 255
