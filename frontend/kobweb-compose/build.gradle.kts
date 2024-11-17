@@ -52,14 +52,6 @@ kotlin {
     }
 }
 
-/*
-kobwebPublication {
-    artifactId.set("kobweb-compose")
-    description.set("Additions to Web Compose that attempt to mimic Jetpack Compose as much as possible")
-    filter.set(FILTER_OUT_MULTIPLATFORM_PUBLICATIONS)
-}
- */
-
 android {
     namespace = "com.varabyte.kobweb.compose"
     compileSdk = libs.versions.android.compileSdk.get().toInt()

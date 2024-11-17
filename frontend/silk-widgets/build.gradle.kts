@@ -1,11 +1,12 @@
-import com.varabyte.kobweb.gradle.publish.FILTER_OUT_MULTIPLATFORM_PUBLICATIONS
-import com.varabyte.kobweb.gradle.publish.set
-
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.compiler)
-    id("com.varabyte.kobweb.internal.publish")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.compose.multiplatform)
 }
+
+group = "com.varabyte.kobweb"
+version = libs.versions.kobweb.libs.get()
 
 group = "com.varabyte.kobweb"
 version = libs.versions.kobweb.libs.get()
@@ -14,21 +15,45 @@ kotlin {
     js {
         browser()
     }
+    androidTarget()
+    jvm()
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+        }
+        val jbMain by creating {
+            dependsOn(commonMain.get())
+        }
+        iosMain { dependsOn(jbMain) }
+        iosX64Main { dependsOn(jbMain) }
+        iosArm64Main { dependsOn(jbMain) }
+        iosSimulatorArm64Main { dependsOn(jbMain) }
+        androidMain { dependsOn(jbMain) }
+        jvmMain {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+            dependsOn(jbMain)
+        }
         jsMain.dependencies {
-            implementation(libs.compose.runtime)
             implementation(libs.compose.html.core)
+            api(projects.frontend.composeHtmlExt)
+        }
 
-            api(projects.frontend.kobwebCompose)
-            api(projects.frontend.silkFoundation)
-            implementation(projects.frontend.composeHtmlExt)
+        jsTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.truthish)
         }
     }
 }
 
-kobwebPublication {
-    artifactId.set("silk-widgets")
-    description.set("The subset of Silk that doesn't depend on Kobweb at all, extracted into its own library in case projects want to use it without Kobweb")
-    filter.set(FILTER_OUT_MULTIPLATFORM_PUBLICATIONS)
+android {
+    namespace = "com.varabyte.kobweb.compose.material3"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 }
